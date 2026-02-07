@@ -1,0 +1,345 @@
+:root {
+  --bg-color: #f4f4f4;
+  --card-bg: #ffffff;
+  --text-color: #333;
+  --primary-yellow: #FFD700;
+  --creator: #6d70df;
+  --followers: #989ac1;
+  --kating: #ffd79e;
+  --bersyarat: #fb5228;
+  --secondary-yellow: #FFC107;
+  --accent-dark: #222;
+  --red-color: #ff0f0f;
+}
+
+.dark-mode {
+  --bg-color: #1a1a1a;
+  --card-bg: #2d2d2d;
+  --text-color: #f1f1f1;
+  --primary-yellow: #FFD700;
+  --creator: #4c4f94;
+  --followers: #727390;
+  --kating: #ae946f;
+  --bersyarat: #b83d1e;
+  --accent-dark: #000;
+  --red-color: #b80f0f;
+}
+
+* { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; transition: 0.3s; }
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+section { display: none; padding: 20px; }
+section.active { display: flex; flex-direction: column; align-items: center; }
+
+.card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 100px auto;
+  text-align: center;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+.btn-primary {
+  background: var(--primary-yellow);
+  border: none;
+  padding: 12px 20px;
+  width: 100%;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+}
+
+.btn-primary:hover { background: var(--secondary-yellow); }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.schedule-card {
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: 12px;
+  border-left: 8px solid var(--primary-yellow);
+  position: relative;
+}
+
+.fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: var(--primary-yellow);
+  border-radius: 50%;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.modal {
+  position: fixed;
+  z-index: 100;
+  left: 0; top: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  margin: 10% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 15px;
+}
+
+.theme-switch {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  z-index: 1000;
+}
+
+.main-header {
+  width: 100%;
+  background-color: var(--card-bg);
+  border-bottom: 3px solid var(--primary-yellow);
+  padding: 10px 0;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.btn-theme {
+  background-color: var(--secondary-yellow);
+  color: var(--text-color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-logout {
+  background-color: var(--red-color);
+  color: var(--text-color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-logout:hover {
+  transform: translateY(-2px);
+}
+
+/* Account area in header */
+.account-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(0,0,0,0.06);
+  background-color: rgba(0,0,0,0.03);
+}
+
+/* circular profile button */
+.profile-btn {
+  background-color: var(--secondary-yellow);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  padding: 0;
+  border: 2px solid rgba(0,0,0,0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.profile-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* account floating menu */
+.account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: 260px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  padding: 12px;
+  display: none;
+  z-index: 1200;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.account-menu[aria-hidden="false"], .account-menu.active {
+  display: block;
+}
+.account-menu .menu-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.menu-pic {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.menu-info { display: flex; flex-direction: column; }
+.menu-name { font-weight: 700; }
+.menu-email { font-size: 0.85rem; opacity: 0.85; }
+.menu-actions { margin-top: 10px; display:flex; justify-content:flex-end; }
+
+@media (max-width: 600px) {
+  .account-menu { right: 8px; left: 8px; width: auto; }
+}
+.account-info { display: flex; flex-direction: column; text-align: left; }
+.account-name { font-weight: 700; font-size: 0.95rem; }
+.account-email { font-size: 0.8rem; opacity: 0.85; }
+
+.btn-copy {
+  width: 44px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: var(--secondary-yellow);
+  color: var(--text-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.kating-label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.kating-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.kating-badge {
+    background-color: var(--kating);
+    color: var(--text-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.05);
+    display: inline-block;
+}
+
+.kating-badge:hover {
+  transform: translateY(-2px);
+}
+
+.bersyarat {
+  background-color: var(--bersyarat);
+}
+
+.creator {
+  background-color: var(--creator);
+}
+
+.followers {
+  background-color: var(--followers);
+}
+
+@media (max-width: 600px) {
+  .grid-container { grid-template-columns: 1fr; }
+}
+
+#add-schedule-page {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  overflow-y: auto;
+  backdrop-filter: blur(5px);
+}
+
+#add-schedule-page .form-container {
+  background-color: var(--card-bg);
+  margin: 5% auto;
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
