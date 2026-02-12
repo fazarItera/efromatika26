@@ -51,6 +51,30 @@
                         </div>
                     </div>
                 </div>
+                <!-- Listbar (top-left) -->
+                <div class="listbar" id="listbar">
+                    <button class="listbar-toggle" onclick="toggleListbar()"><i class="fas fa-bars"></i></button>
+                    <div class="listbar-menu" id="listbar-menu">
+                        <button onclick="showTasksPage()">Tugas</button>
+                        <button onclick="showSharingPage()">Sharing</button>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <div id="dashboard" class="dashboard">
+                    <div class="dash-card" id="dash-tugas">
+                        <h3>Tugas Selesai</h3>
+                        <p id="dash-tugas-count">-</p>
+                    </div>
+                    <div class="dash-card" id="dash-kakak">
+                        <h3>Kakak Tingkat Diajak</h3>
+                        <div id="dash-kakak-list">-</div>
+                    </div>
+                    <div class="dash-card" id="dash-kehadiran">
+                        <h3>Kehadiran</h3>
+                        <p id="dash-kehadiran-count">-</p>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -88,11 +112,13 @@
             </form>
         </div>
     </section>
-
+    
+    <!-- Firebase SDKs (compat mode) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
+    <!-- Your app script (initialized with Firebase config in script.js) -->
     <script src="script.js"></script>
     
 </body>
