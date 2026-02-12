@@ -126,6 +126,39 @@ input, select {
   z-index: 1000;
 }
 
+/* Listbar */
+.listbar {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 1200;
+}
+.listbar-toggle {
+  background: var(--primary-yellow);
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.listbar-menu {
+  display: none;
+  margin-top: 8px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.listbar-menu button {
+  display: block;
+  background: transparent;
+  border: none;
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+}
+.listbar.open .listbar-menu { display: block; }
+
 .main-header {
   width: 100%;
   background-color: var(--card-bg);
@@ -248,9 +281,9 @@ input, select {
   border-radius: 50%;
   object-fit: cover;
 }
-.menu-info { display: flex; flex-direction: column; }
-.menu-name { font-weight: 700; }
-.menu-email { font-size: 0.85rem; opacity: 0.85; }
+.menu-info { display: flex; flex-direction: column; min-width: 0; }
+.menu-name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.menu-email { font-size: 0.85rem; opacity: 0.85; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .menu-actions { margin-top: 10px; display:flex; justify-content:flex-end; }
 
 @media (max-width: 600px) {
@@ -313,6 +346,27 @@ input, select {
     border: 1px solid rgba(0,0,0,0.05);
     display: inline-block;
 }
+
+/* Dashboard */
+.dashboard {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 16px auto;
+  padding: 0 20px;
+}
+.dash-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 14px;
+  flex: 1;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  min-height: 80px;
+}
+.dash-card h3 { margin: 0 0 8px 0; font-size: 0.95rem; }
+.dash-card p { margin: 0; font-size: 1.25rem; font-weight: 700; }
+.dash-card #dash-kakak-list { display:flex; flex-direction:column; gap:6px; }
 
 .kating-badge:hover {
   transform: translateY(-2px);
