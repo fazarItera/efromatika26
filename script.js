@@ -282,6 +282,7 @@ async function handleLogin(e) {
         currentUser = userCred.user.uid;
         showPage('main-page');
         loadSchedules();
+            loadDashboard();
     } catch (err) {
         alert(err.message.includes('auth/') ? 'Email atau Password salah!' : (err.message || 'Terjadi kesalahan koneksi.'));
     }
@@ -296,6 +297,7 @@ function checkSession() {
                     currentUser = user.uid;
                     showPage('main-page');
                     loadSchedules();
+                        loadDashboard();
                     updateAccountUI(user);
                 } else {
                 // fallback to local storage session (short-lived)
@@ -700,5 +702,73 @@ async function copyToClipboard(text) {
         document.execCommand('copy');
     } finally {
         document.body.removeChild(ta);
+    }
+}
+
+// Listbar + Dashboard functions
+function toggleListbar() {
+    const lb = document.getElementById('listbar');
+    if (!lb) return;
+    lb.classList.toggle('open');
+}
+
+function showTasksPage() {
+    document.getElementById('listbar')?.classList.remove('open');
+    // focus dashboard tasks area
+    alert('Halaman Tugas: ringkasan ditampilkan pada Dashboard.');
+}
+
+function showSharingPage() {
+    document.getElementById('listbar')?.classList.remove('open');
+    showPage('main-page');
+    loadSchedules();
+}
+
+async function loadDashboard() {
+    const tugasCountEl = document.getElementById('dash-tugas-count');
+    const kakakListEl = document.getElementById('dash-kakak-list');
+    const hadirCountEl = document.getElementById('dash-kehadiran-count');
+    if (!tugasCountEl || !kakakListEl || !hadirCountEl) return;
+    try {
+        if (!db || !auth || !currentUser) {
+            tugasCountEl.textContent = '-';
+            kakakListEl.textContent = '-';
+            hadirCountEl.textContent = '-';
+            return;
+        }
+        const userId = currentUser;
+        // tasks count
+        let tugasCount = 0;
+        try {
+            const tasksSnap = await db.collection('tasks').where('user','==',userId).where('completed','==',true).get();
+            tugasCount = tasksSnap.size;
+        } catch (e) { tugasCount = 0; }
+        tugasCountEl.textContent = tugasCount;
+
+        // attendance
+        let hadirCount = 0;
+        try {
+            const hadirSnap = await db.collection('attendance').where('user','==',userId).where('present','==',true).get();
+            hadirCount = hadirSnap.size;
+        } catch (e) { hadirCount = 0; }
+        hadirCountEl.textContent = hadirCount;
+
+        // kakak tingkat invited (unique kating from schedules created by user)
+        kakakListEl.innerHTML = '';
+        try {
+            const schSnap = await db.collection('schedules').where('creator','==',userId).get();
+            const names = new Set();
+            schSnap.forEach(doc => {
+                const d = doc.data();
+                const arr = Array.isArray(d.kating) ? d.kating : (d.kating ? d.kating.split(',') : []);
+                arr.forEach(x => { if (x && x.toString().trim() !== '') names.add(x.toString().trim()); });
+            });
+            if (names.size === 0) kakakListEl.textContent = '-';
+            else {
+                Array.from(names).slice(0,5).forEach(n => { const el = document.createElement('div'); el.textContent = n; kakakListEl.appendChild(el); });
+            }
+        } catch (e) { kakakListEl.textContent = '-'; }
+    } catch (err) {
+        tugasCountEl.textContent = '-'; kakakListEl.textContent = '-'; hadirCountEl.textContent = '-';
     }
 }
